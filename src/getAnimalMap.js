@@ -6,83 +6,193 @@ function optionsUndefined() {
     NW: [],
     SE: [],
     SW: []
-  }
+  };
+  const pushLocation = (location, animal) => location.push(animal.name)
+
   const location = data.species.forEach((animal) => {
     if (animal.location === 'NE') {
       const { NE } = resultado;
-      NE.push(animal.name)
+      pushLocation(NE, animal);
     }
     if (animal.location === 'NW') {
       const { NW } = resultado;
-      NW.push(animal.name)
+      pushLocation(NW, animal);
     }
     if (animal.location === 'SE') {
       const { SE } = resultado;
-      SE.push(animal.name)
+      pushLocation(SE, animal);
     }
     if (animal.location === 'SW') {
       const { SW } = resultado;
-      SW.push(animal.name)
+      pushLocation(SW, animal);
     }
   })
-  return resultado
+  return resultado;
+}
+
+function criaArrayNames(animal) {
+  return animal.residents.map((nome) => nome.name);
+}
+
+function criaArrayNamesSex(animal, sex) {
+  const sexAnimais = []
+  
+  const animais = animal.residents.forEach((nome) => {
+    if (nome.sex === sex) {
+ sexAnimais.push(nome.name)
+   }
+  })
+
+  return sexAnimais;
+}
+
+
+function pushObjSorted(location, animal) {
+  const specie = animal.name;
+  const obj = {};
+  names = criaArrayNames(animal)
+  obj[specie] = names.sort()
+  return location.push(obj);
+}
+
+function pushObj(location, animal) {
+  const specie = animal.name;
+  const obj = {};
+  const names = criaArrayNames(animal)
+  obj[specie] = names
+  return location.push(obj);
+}
+
+function pushObjSex(location, animal, sex) {
+  const specie = animal.name;
+  const obj = {};
+  const names = criaArrayNamesSex(animal, sex)
+  obj[specie] = names
+  return location.push(obj);
 }
 
 function getAnimalMap(options) {
-  if (options === undefined) {
-    return optionsUndefined()
+  if (options === undefined || options.includeNames === false || options.includeNames === undefined) {
+    return optionsUndefined();
   }
   const resultado = {
     NE: [],
     NW: [],
     SE: [],
     SW: []
-  }
+  };
+  const { NE } = resultado;
+  const { NW } = resultado;
+  const { SE } = resultado;
+  const { SW } = resultado;
 
-  if (options.includeNames === true) {
-    const location = data.species.forEach((animal) => {
+  if (options.sorted === true && options.sex === 'female') {
+    const locationFamale = data.species.forEach((animal) => {
       if (animal.location === 'NE') {
-        const specie = animal.name
-        const names = animal.residents.map((nome) => nome.name);
-        const obj = {}
-        obj[specie] = names
-        const { NE } = resultado;
-        NE.push(obj)
-
+        pushObjSex(NE, animal, 'female');
       }
       if (animal.location === 'NW') {
-        const specie = animal.name
-        const names = animal.residents.map((nome) => nome.name);
-        const obj = {}
-        obj[specie] = names
-        const { NW } = resultado;
-        NW.push(obj)
-
+        pushObjSex(NW, animal, 'female');
       }
       if (animal.location === 'SE') {
-        const specie = animal.name
-        const names = animal.residents.map((nome) => nome.name);
-        const obj = {}
-        obj[specie] = names
-        const { SE } = resultado;
-        SE.push(obj)
-
+        pushObjSex(SE, animal, 'female');
       }
       if (animal.location === 'SW') {
-        const specie = animal.name
-        const names = animal.residents.map((nome) => nome.name);
-        const obj = {}
-        obj[specie] = names
-        const { SW } = resultado;
-        SW.push(obj)
-
+        pushObjSex(SW, animal, 'female');
       }
-    })
-    return resultado
+    });
   }
 
-  return optionsUndefined()
-}
+  if (options.sex === 'male') {
+    const locationMale = data.species.forEach((animal) => {
+      if (animal.location === 'NE') {
+        pushObjSex(NE, animal, 'male');
+      }
+      if (animal.location === 'NW') {
+        pushObjSex(NW, animal, 'male');
+      }
+      if (animal.location === 'SE') {
+        pushObjSex(SE, animal, 'male');
+      }
+      if (animal.location === 'SW') {
+        pushObjSex(SW, animal, 'male');
+      }
+    });
+  }
 
-console.log(getAnimalMap({ includeNames: true }));
+  if (options.sex === 'female') {
+    const locationFamale = data.species.forEach((animal) => {
+      if (animal.location === 'NE') {
+        pushObjSex(NE, animal, 'female');
+      }
+      if (animal.location === 'NW') {
+        pushObjSex(NW, animal, 'female');
+      }
+      if (animal.location === 'SE') {
+        pushObjSex(SE, animal, 'female');
+      }
+      if (animal.location === 'SW') {
+        pushObjSex(SW, animal, 'female');
+      }
+    });
+  }
+  
+  if (options.sex === 'male') {
+    const locationMale = data.species.forEach((animal) => {
+      if (animal.location === 'NE') {
+        pushObjSex(NE, animal, 'male');
+      }
+      if (animal.location === 'NW') {
+        pushObjSex(NW, animal, 'male');
+      }
+      if (animal.location === 'SE') {
+        pushObjSex(SE, animal, 'male');
+      }
+      if (animal.location === 'SW') {
+        pushObjSex(SW, animal, 'male');
+      }
+    });
+  }
+
+  if (options.sorted === true) {
+    const locationSorted = data.species.forEach((animal) => {
+      if (animal.location === 'NE') {
+        pushObjSorted(NE, animal);
+      }
+      if (animal.location === 'NW') {
+        pushObjSorted(NW, animal);
+      }
+      if (animal.location === 'SE') {
+        pushObjSorted(SE, animal);
+      }
+      if (animal.location === 'SW') {
+        pushObjSorted(SW, animal);
+      }
+    });
+  }
+
+  if (options.includeNames === true && options.sorted === undefined && options.sex === undefined) {
+    const locationIncludeNames = data.species.forEach((animal) => {
+      if (animal.location === 'NE') {
+        pushObj(NE, animal);
+      }
+      if (animal.location === 'NW') {
+        pushObj(NW, animal);
+      }
+      if (animal.location === 'SE') {
+        pushObj(SE, animal);
+      }
+      if (animal.location === 'SW') {
+        pushObj(SW, animal);
+      }
+    });
+  }
+
+ 
+
+return resultado;
+}
+  
+
+console.log(getAnimalMap({ includeNames: true, sex: 'female'}));
 module.exports = getAnimalMap;
