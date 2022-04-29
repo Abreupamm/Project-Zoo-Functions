@@ -1,5 +1,8 @@
 # Project-Zoo-Functions
 
+Foi um desafio entregar 100% desse projeto, o projeto mais temido pelos estudantes do módulo de fundamentos da trybe. Mas foi muito gratificante finalizar esse desafio e maravilhoso sentir o quanto eu evolui.
+
+
 ## Habilidades
 
 Neste projeto, verificamos se você é capaz de:
